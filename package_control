@@ -1,0 +1,8 @@
+Package: cmakebuild
+Version: 0.0.1
+Architecture: all
+Maintainer: Kai Oestreich <oestreich@incoretex.de>
+Description: A small Wrapper around scripts easing the building and flashing of CMake based Projects.
+             Just call CMakeBuild for the functionality overview.
+Depends: python3, cmake, gdb
+
