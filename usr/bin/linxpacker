@@ -464,11 +464,18 @@ def sanitize_package_name(name: str) -> str:
     return name or 'package'
 
 
-def init_control(control_file: str):
-    """Create a stub package_control file."""
+def init_project(control_file: str, source_dir: str):
+    """Create the source directory layout and a stub package_control file."""
+    bin_dir = os.path.join(source_dir, 'bin')
+    if os.path.isdir(bin_dir):
+        warn(f"{bin_dir} already exists, skipping")
+    else:
+        os.makedirs(bin_dir)
+        success(f"Created {bin_dir}")
+
     if os.path.exists(control_file):
-        error(f"{control_file} already exists")
-        sys.exit(1)
+        warn(f"{control_file} already exists, skipping")
+        return
 
     package = sanitize_package_name(os.path.basename(os.getcwd()))
     with open(control_file, 'w') as f:
@@ -495,7 +502,7 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  %(prog)s --init             # Create a stub package_control in the current directory
+  %(prog)s --init             # Create usr/bin and a stub package_control
   %(prog)s -p all             # Build both .deb and pacman packages
   %(prog)s -p deb             # Build only .deb package
   %(prog)s -p arch            # Build only pacman package
@@ -512,7 +519,7 @@ Examples:
     action.add_argument(
         '-i', '--init',
         action='store_true',
-        help='Create a stub package_control in the current directory'
+        help='Create the source directory (usr/bin) and a stub package_control'
     )
     parser.add_argument(
         '-c', '--control',
@@ -547,7 +554,7 @@ Examples:
     output_dir = os.path.abspath(args.output)
 
     if args.init:
-        init_control(control_file)
+        init_project(control_file, source_dir)
         return
 
     if not args.pack:
