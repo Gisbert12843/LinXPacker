@@ -1,8 +1,7 @@
-Package: cmakebuild
-Version: 0.0.1
+Package: linxpacker
+Version: 0.0.2
 Architecture: all
-Maintainer: Kai Oestreich <oestreich@incoretex.de>
-Description: A small Wrapper around scripts easing the building and flashing of CMake based Projects.
-             Just call CMakeBuild for the functionality overview.
+Maintainer: Kai Oestreich <kai.oestreich.12843@gmail.com>
+Description: "A small tool to pack programs for Arch/Deb package managers"
 Depends: python3, cmake, gdb
 
